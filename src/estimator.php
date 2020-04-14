@@ -12,9 +12,9 @@ function getTime($periodType, $timeToElapse)
             $val=floor(($timeToElapse * 7)/3);
             return pow(2, $val);//25948160 > 2429340876800
         case 'months':
-            $weeks=$timeToElapse*4;
-            $val=floor(($weeks * 7)/3);
-//            $val=floor(($timeToElapse * 30)/3);
+//            $weeks=$timeToElapse*4;
+//            $val=floor(($weeks * 7)/3);
+            $val=floor(($timeToElapse * 30)/3);
             return pow(2, $val); //39444480> 20195573760
         default:
             return 1;
