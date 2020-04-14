@@ -19,7 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }else{
     $postedData = $_GET;//$_SERVER['RE'];
 }
-
+//die(json_encode($postedData));
+file_put_contents('./logs/sample.txt', json_encode($postedData), FILE_APPEND);
+//die(floor(10.9));
 if(isset($postedData) && !is_null($postedData)) {
     $dt = covid19ImpactEstimator($postedData);
     $res = null;
