@@ -1,6 +1,7 @@
 <?php
-
-
+/*
+ *
+ */
 function getTime($periodType, $timeToElapse)
 {
     //pow(2,10)=30 days
@@ -19,6 +20,9 @@ function getTime($periodType, $timeToElapse)
     }
 }
 
+/*
+ *
+ */
 function getDays($periodType, $timeToElapse)
 {
     switch ($periodType) {
@@ -33,6 +37,9 @@ function getDays($periodType, $timeToElapse)
     }
 }
 
+/*
+ *
+ */
 function checkIfArray($data)
 {
     if (is_array($data)) {
@@ -42,6 +49,9 @@ function checkIfArray($data)
     }
 }
 
+/*
+ *
+ */
 function doOutput()
 {
 
@@ -97,8 +107,6 @@ function covid19ImpactEstimator($data)
 
     $infected = intval($impact['infectionsByRequestedTime']);
     $earningPopulation = $avgDailyIncomePopulation * $population;
-//    $impact['dollarsInFlight'] = round($infected * ($infected / $earningPopulation) * $avgDailyIncomeInUSD * $days);//economy loss
-//    $impact['dollarsInFlight'] = round(($infected/$earningPopulation)  * $avgDailyIncomeInUSD * $days); //economy loss
     $impact['dollarsInFlight'] = round(($infected*$avgDailyIncomePopulation) * $avgDailyIncomeInUSD * $days); //economy loss
 
     $severeImpact = [];
@@ -115,7 +123,6 @@ function covid19ImpactEstimator($data)
 
     $infected = intval($severeImpact['infectionsByRequestedTime']);
     $earningPopulation = $avgDailyIncomePopulation * $population;
-//    $severeImpact['dollarsInFlight'] = floor(($infected/$earningPopulation) * $avgDailyIncomeInUSD * $days);//economy loss
     $severeImpact['dollarsInFlight'] = floor(($infected*$avgDailyIncomePopulation) * $avgDailyIncomeInUSD * $days);//economy loss
 
 
@@ -125,7 +132,6 @@ function covid19ImpactEstimator($data)
     $response['severeImpact'] = $severeImpact;
     return $response;
 }
-
 
 //{
 //    region: {
@@ -155,6 +161,9 @@ function array_to_xml($student_info, &$xml_student_info)
     }
 }
 
+/*
+ *
+ */
 function test()
 {
     $data['region'] = [
