@@ -67,7 +67,7 @@ function covid19ImpactEstimator($data)
     $impact = [];
     $impact['currentlyInfected'] = $reportedCases * 10;
     $impact['infectionsByRequestedTime'] = round(intval($impact['currentlyInfected']) * $time);
-    $severeImpact['dollarsInFlight'] = round((intval($impact['infectionsByRequestedTime']) * $avgDailyIncomePopulation) * $avgDailyIncomeInUSD * 30);//economy loss 30 days
+    $impact['dollarsInFlight'] = round((intval($impact['infectionsByRequestedTime']) * $avgDailyIncomePopulation) * $avgDailyIncomeInUSD * 30);//economy loss 30 days
 
 
     $severeImpact = [];
@@ -127,8 +127,8 @@ function test()
     $data['region'] = [
         'name' => 'Africa',
         'avgAge' => 19.7,
-        'avgDailyIncomeInUSD' => 19.7,
-        'avgDailyIncomePopulation' => 19.7,
+        'avgDailyIncomeInUSD' => 5,
+        'avgDailyIncomePopulation' => 0.71,
     ];
 
     $data['periodType'] = 'days';
