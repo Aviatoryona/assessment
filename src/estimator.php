@@ -6,10 +6,10 @@ function getTime($periodType, $timeToElapse)
     //pow(2,10)=30 days
     switch ($periodType) {
         case 'days':
-            $val=floor($timeToElapse/3);
+            $val=floor(($timeToElapse*30)/3);
             return pow(2, $val); //8744960 > 1561600
         case 'weeks':
-            $val=floor(($timeToElapse * 7)/3);
+            $val=floor(($timeToElapse * 30)/3);
             return pow(2, $val);//25948160 > 2429340876800
         case 'months':
             $val=floor(($timeToElapse * 30)/3);
