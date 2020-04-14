@@ -99,7 +99,7 @@ function covid19ImpactEstimator($data)
     $earningPopulation = $avgDailyIncomePopulation * $population;
 //    $impact['dollarsInFlight'] = round($infected * ($infected / $earningPopulation) * $avgDailyIncomeInUSD * $days);//economy loss
 //    $impact['dollarsInFlight'] = round(($infected/$earningPopulation)  * $avgDailyIncomeInUSD * $days); //economy loss
-    $impact['dollarsInFlight'] = round(($infected/$population) * $avgDailyIncomePopulation  * $avgDailyIncomeInUSD * $days); //economy loss
+    $impact['dollarsInFlight'] = round(($infected*$avgDailyIncomePopulation) * $avgDailyIncomeInUSD * $days); //economy loss
 
     $severeImpact = [];
     $severeImpact['currentlyInfected'] = $reportedCases * 50;
@@ -116,7 +116,7 @@ function covid19ImpactEstimator($data)
     $infected = intval($severeImpact['infectionsByRequestedTime']);
     $earningPopulation = $avgDailyIncomePopulation * $population;
 //    $severeImpact['dollarsInFlight'] = floor(($infected/$earningPopulation) * $avgDailyIncomeInUSD * $days);//economy loss
-    $severeImpact['dollarsInFlight'] = floor(($infected/$population)*$avgDailyIncomePopulation * $avgDailyIncomeInUSD * $days);//economy loss
+    $severeImpact['dollarsInFlight'] = floor(($infected*$avgDailyIncomePopulation) * $avgDailyIncomeInUSD * $days);//economy loss
 
 
     $response = [];
