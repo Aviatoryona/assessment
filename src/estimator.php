@@ -86,8 +86,7 @@ function covid19ImpactEstimator($data)
     $days = getDays($periodType, $timeToElapse);
 
 //    die($avgDailyIncomePopulation);
-
-    $occupiedBeds = 0.65 * $totalHospitalBeds;
+//    $occupiedBeds = 0.65 * $totalHospitalBeds;
     $bedsAvailable = ($totalHospitalBeds * 0.35);
 
     $impact = [];
@@ -95,8 +94,8 @@ function covid19ImpactEstimator($data)
     $impact['infectionsByRequestedTime'] = floor(intval($impact['currentlyInfected']) * $time);
     $impact['severeCasesByRequestedTime'] = floor(intval($impact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
     $beds = $bedsAvailable - intval($impact['severeCasesByRequestedTime']);
-    if ($beds > 0) {
-        $beds = $beds - 1;
+    if ($beds < 0) {
+        $beds = $beds + 1;
     }
     $impact['hospitalBedsByRequestedTime'] = floor($beds);
     $impact['casesForICUByRequestedTime'] = floor(intval($impact['infectionsByRequestedTime']) * (5 / 100));//require icucare
@@ -108,8 +107,8 @@ function covid19ImpactEstimator($data)
     $severeImpact['infectionsByRequestedTime'] = floor(intval($severeImpact['currentlyInfected']) * $time);
     $severeImpact['severeCasesByRequestedTime'] = floor(intval($severeImpact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
     $beds = $bedsAvailable - intval($severeImpact['severeCasesByRequestedTime']);
-    if ($beds > 0) {
-        $beds = $beds - 1;
+    if ($beds < 0) {
+        $beds = $beds + 1;
     }
     $severeImpact['hospitalBedsByRequestedTime'] =floor($beds);
     $severeImpact['casesForICUByRequestedTime'] = floor(intval($severeImpact['infectionsByRequestedTime']) * (5 / 100));//require icucare
