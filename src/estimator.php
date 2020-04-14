@@ -71,13 +71,16 @@ function covid19ImpactEstimator($data)
 
 //    die($time);
 
+    $occupiedBeds = (65 / 100) * $totalHospitalBeds;
+    $bedsAvailable = $totalHospitalBeds - $occupiedBeds;
+
     $impact = [];
     $impact['currentlyInfected'] = $reportedCases * 10;
     $impact['infectionsByRequestedTime'] = round(intval($impact['currentlyInfected']) * $time);
-    $impact['severeCasesByRequestedTime']=0;
-    $impact['hospitalBedsByRequestedTime']=0;
-    $impact['casesForICUByRequestedTime']=0;
-    $impact['casesForVentilatorsByRequestedTime']=0;
+    $impact['severeCasesByRequestedTime'] = round(intval($impact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
+    $impact['hospitalBedsByRequestedTime'] = round(intval($impact['severeCasesByRequestedTime']) - $bedsAvailable);
+    $impact['casesForICUByRequestedTime'] = round(intval($impact['infectionsByRequestedTime']) * (5 / 100));//require icucare
+    $impact['casesForVentilatorsByRequestedTime'] = round(intval($impact['infectionsByRequestedTime']) * (2 / 100));//require ventilators
     $impact['dollarsInFlight'] = round((intval($impact['infectionsByRequestedTime']) * $avgDailyIncomePopulation) * $avgDailyIncomeInUSD * 30);//economy loss 30 days
 
 
@@ -85,15 +88,9 @@ function covid19ImpactEstimator($data)
     $severeImpact['currentlyInfected'] = $reportedCases * 50;
     $severeImpact['infectionsByRequestedTime'] = round(intval($severeImpact['currentlyInfected']) * $time);
     $severeImpact['severeCasesByRequestedTime'] = round(intval($severeImpact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
-
-    $occupiedBeds = (65 / 100) * $totalHospitalBeds;
-    $bedsAvailable = $totalHospitalBeds - $occupiedBeds;
-
     $severeImpact['hospitalBedsByRequestedTime'] = round(intval($severeImpact['severeCasesByRequestedTime']) - $bedsAvailable);
     $severeImpact['casesForICUByRequestedTime'] = round(intval($severeImpact['infectionsByRequestedTime']) * (5 / 100));//require icucare
-    $severeImpact['casesForVentilatorsByRequestedTime'] = round(intval($severeImpact['infectionsByRequestedTime']) * (5 / 100));//require ventilators
-
-
+    $severeImpact['casesForVentilatorsByRequestedTime'] = round(intval($severeImpact['infectionsByRequestedTime']) * (2 / 100));//require ventilators
     $severeImpact['dollarsInFlight'] = round((intval($severeImpact['infectionsByRequestedTime']) * $avgDailyIncomePopulation) * $avgDailyIncomeInUSD * 30);//economy loss 30 days
 
 
