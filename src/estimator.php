@@ -6,11 +6,14 @@ function getTime($periodType, $timeToElapse)
     //pow(2,10)=30 days
     switch ($periodType) {
         case 'days':
-            return ($timeToElapse * (pow(2, 10))) / 30;
+            $val=floor($timeToElapse/3);
+            return pow(2, $val); //8744960 > 1561600
         case 'weeks':
-            return ($timeToElapse * 7 * (pow(2, 10))) / 30;
+            $val=floor(($timeToElapse * 7)/3);
+            return pow(2, $val);//25948160 > 2429340876800
         case 'months':
-            return ($timeToElapse * 30 * (pow(2, 10))) / 30;
+            $val=floor(($timeToElapse * 30)/3);
+            return pow(2, $val); //39444480> 20195573760
         default:
             return 1;
     }
@@ -63,6 +66,8 @@ function covid19ImpactEstimator($data)
     $totalHospitalBeds = intval($parsedData['totalHospitalBeds']);
 
     $time = getTime($periodType, $timeToElapse);
+
+//    die($time);
 
     $impact = [];
     $impact['currentlyInfected'] = $reportedCases * 10;
