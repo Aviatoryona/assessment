@@ -12,8 +12,6 @@ function getTime($periodType, $timeToElapse)
             $val = floor(($timeToElapse * 7) / 3);
             return pow(2, $val);//25948160 > 2429340876800
         case 'months':
-//            $weeks=$timeToElapse*4;
-//            $val=floor(($weeks * 7)/3);
             $val = floor(($timeToElapse * 30) / 3);
             return pow(2, $val); //39444480> 20195573760
         default:
@@ -27,9 +25,9 @@ function getDays($periodType, $timeToElapse)
         case 'days':
             return $timeToElapse;
         case 'weeks':
-            return floor(($timeToElapse * 7));
+            return ($timeToElapse * 7);
         case 'months':
-            return floor(($timeToElapse * 30));
+            return ($timeToElapse * 30);
         default:
             return 1;
     }
@@ -70,8 +68,6 @@ function covid19ImpactEstimator($data)
 
     $parsedData = checkIfArray($data);
 
-//    echo(json_encode($parsedData));
-
     $name = ($parsedData['region']['name']);
     $avgAge = doubleval($parsedData['region']['avgAge']);
     $avgDailyIncomeInUSD = doubleval($parsedData['region']['avgDailyIncomeInUSD']);
@@ -85,8 +81,6 @@ function covid19ImpactEstimator($data)
     $time = getTime($periodType, $timeToElapse);
     $days = getDays($periodType, $timeToElapse);
 
-//    die($avgDailyIncomePopulation);
-//    $occupiedBeds = 0.65 * $totalHospitalBeds;
     $bedsAvailable = ($totalHospitalBeds * 0.35);
 
     $impact = [];
@@ -100,7 +94,11 @@ function covid19ImpactEstimator($data)
     $impact['hospitalBedsByRequestedTime'] = floor($beds);
     $impact['casesForICUByRequestedTime'] = floor(intval($impact['infectionsByRequestedTime']) * (5 / 100));//require icucare
     $impact['casesForVentilatorsByRequestedTime'] = floor(intval($impact['infectionsByRequestedTime']) * (2 / 100));//require ventilators
-    $impact['dollarsInFlight'] = round((intval($impact['infectionsByRequestedTime']) * ($avgDailyIncomePopulation / 100)) * $avgDailyIncomeInUSD * $days);//economy loss
+
+    $infected = intval($impact['infectionsByRequestedTime']);
+    $earningPopulation = $avgDailyIncomePopulation * $population;
+//    $impact['dollarsInFlight'] = round($infected * ($infected / $earningPopulation) * $avgDailyIncomeInUSD * $days);//economy loss
+    $impact['dollarsInFlight'] = round($infected * $avgDailyIncomePopulation * $avgDailyIncomeInUSD * $days); //economy loss
 
     $severeImpact = [];
     $severeImpact['currentlyInfected'] = $reportedCases * 50;
@@ -110,10 +108,13 @@ function covid19ImpactEstimator($data)
     if ($beds < 0) {
         $beds = $beds + 1;
     }
-    $severeImpact['hospitalBedsByRequestedTime'] =floor($beds);
+    $severeImpact['hospitalBedsByRequestedTime'] = floor($beds);
     $severeImpact['casesForICUByRequestedTime'] = floor(intval($severeImpact['infectionsByRequestedTime']) * (5 / 100));//require icucare
     $severeImpact['casesForVentilatorsByRequestedTime'] = floor(intval($severeImpact['infectionsByRequestedTime']) * (2 / 100));//require ventilators
-    $severeImpact['dollarsInFlight'] = floor((intval($severeImpact['infectionsByRequestedTime']) * ($avgDailyIncomePopulation / 100)) * $avgDailyIncomeInUSD * $days);//economy loss
+
+    $infected = intval($severeImpact['infectionsByRequestedTime']);
+    $earningPopulation = $avgDailyIncomePopulation * $population;
+    $severeImpact['dollarsInFlight'] = floor($infected * $avgDailyIncomePopulation * $avgDailyIncomeInUSD * $days);//economy loss
 
 
     $response = [];
