@@ -74,6 +74,10 @@ function covid19ImpactEstimator($data)
     $impact = [];
     $impact['currentlyInfected'] = $reportedCases * 10;
     $impact['infectionsByRequestedTime'] = round(intval($impact['currentlyInfected']) * $time);
+    $impact['severeCasesByRequestedTime']=0;
+    $impact['hospitalBedsByRequestedTime']=0;
+    $impact['casesForICUByRequestedTime']=0;
+    $impact['casesForVentilatorsByRequestedTime']=0;
     $impact['dollarsInFlight'] = round((intval($impact['infectionsByRequestedTime']) * $avgDailyIncomePopulation) * $avgDailyIncomeInUSD * 30);//economy loss 30 days
 
 
