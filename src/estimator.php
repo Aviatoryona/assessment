@@ -85,7 +85,7 @@ function covid19ImpactEstimator($data)
     $time = getTime($periodType, $timeToElapse);
     $days = getDays($periodType, $timeToElapse);
 
-//    die($days);
+//    die($avgDailyIncomePopulation);
 
     $occupiedBeds = 0.65 * $totalHospitalBeds;
     $bedsAvailable = ($totalHospitalBeds * 0.35)+1;
