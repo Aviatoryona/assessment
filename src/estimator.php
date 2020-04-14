@@ -73,7 +73,7 @@ function covid19ImpactEstimator($data)
 //    die($time);
 
     $occupiedBeds = 0.65 * $totalHospitalBeds;
-    $bedsAvailable = ($totalHospitalBeds * 0.35)-1;
+    $bedsAvailable = ($totalHospitalBeds * 0.35);
 
     $impact = [];
     $impact['currentlyInfected'] = $reportedCases * 10;
