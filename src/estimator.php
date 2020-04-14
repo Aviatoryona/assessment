@@ -77,8 +77,8 @@ function covid19ImpactEstimator($data)
 
     $impact = [];
     $impact['currentlyInfected'] = $reportedCases * 10;
-    $impact['infectionsByRequestedTime'] = round(intval($impact['currentlyInfected']) * $time);
-    $impact['severeCasesByRequestedTime'] = round(intval($impact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
+    $impact['infectionsByRequestedTime'] = floor(intval($impact['currentlyInfected']) * $time);
+    $impact['severeCasesByRequestedTime'] = floor(intval($impact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
     $impact['hospitalBedsByRequestedTime'] = floor($bedsAvailable-intval($impact['severeCasesByRequestedTime']));
     $impact['casesForICUByRequestedTime'] = floor(intval($impact['infectionsByRequestedTime']) * (5 / 100));//require icucare
     $impact['casesForVentilatorsByRequestedTime'] = floor(intval($impact['infectionsByRequestedTime']) * (2 / 100));//require ventilators
@@ -87,8 +87,8 @@ function covid19ImpactEstimator($data)
 
     $severeImpact = [];
     $severeImpact['currentlyInfected'] = $reportedCases * 50;
-    $severeImpact['infectionsByRequestedTime'] = round(intval($severeImpact['currentlyInfected']) * $time);
-    $severeImpact['severeCasesByRequestedTime'] = round(intval($severeImpact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
+    $severeImpact['infectionsByRequestedTime'] = floor(intval($severeImpact['currentlyInfected']) * $time);
+    $severeImpact['severeCasesByRequestedTime'] = floor(intval($severeImpact['infectionsByRequestedTime']) * (15 / 100));//require hospitalization
     $severeImpact['hospitalBedsByRequestedTime'] = floor($bedsAvailable-intval($severeImpact['severeCasesByRequestedTime']));
     $severeImpact['casesForICUByRequestedTime'] = floor(intval($severeImpact['infectionsByRequestedTime']) * (5 / 100));//require icucare
     $severeImpact['casesForVentilatorsByRequestedTime'] = floor(intval($severeImpact['infectionsByRequestedTime']) * (2 / 100));//require ventilators
